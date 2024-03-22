@@ -5,6 +5,7 @@ import 'dart:convert';
 
 import 'package:travel_app/pages/home.dart';
 import 'package:travel_app/pages/register.dart';
+import 'package:travel_app/services/google_sign_in.dart';
 
 const primaryBlue = Color.fromARGB(255, 2, 112, 158);
 const primaryGray = Color.fromARGB(255, 217, 217, 217);
@@ -34,7 +35,6 @@ class _LoginState extends State<Login> {
       },
     );
     Map<String, dynamic> responseBody = jsonDecode(response.body);
-    print(responseBody);
     if (response.statusCode == 200) {
       final String username = responseBody['username'];
       await GetStorage().write('username', username);
@@ -72,9 +72,7 @@ class _LoginState extends State<Login> {
                   Navigator.of(context).pop();
                 },
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.red,
-                  foregroundColor: Colors.white
-                ),
+                    backgroundColor: Colors.red, foregroundColor: Colors.white),
                 child: const Text('DISMISS'),
               ),
             ),
@@ -213,8 +211,26 @@ class _LoginState extends State<Login> {
               SizedBox(
                 width: 312,
                 child: ElevatedButton.icon(
-                  onPressed: () {
-                    // Implement your sign-in logic here (e.g., call _signIn function)
+                  onPressed: () async {
+                    final user = await GoogleService.login();
+                    String username;
+                    if (user?.displayName == null) {
+                      if (user?.email != null) {
+                        username = user?.email ?? "Silahkan login manual";
+                      }
+                      username = "Silahkan login manual";
+                    } else {
+                      username = user?.displayName ?? "Silahkan login manual";
+                    }
+                    await GetStorage().write('username', username);
+                    print("test");
+                    print(username);
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => Home(username),
+                      ),
+                    );
                   },
                   icon: Image.asset(
                     'assets/images/google.png',

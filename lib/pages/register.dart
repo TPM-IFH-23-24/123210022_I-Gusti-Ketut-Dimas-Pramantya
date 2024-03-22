@@ -27,6 +27,81 @@ class _RegisterState extends State<Register> {
     final String email = _emailController.text;
     final String password = _passwordController.text;
     final String username = _usernameController.text;
+    final String confirmPassword = _confirmPasswordController.text;
+
+    if (email == "" || password == "" || username == "" || password == "") {
+      showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+          icon: const Icon(
+            Icons.warning,
+            color: Colors.red,
+            size: 80,
+          ),
+          title: const Text(
+            'Login Failed',
+            textAlign: TextAlign.center,
+            style: TextStyle(fontSize: 16),
+          ),
+          content: const Text(
+            "All field must be filled!",
+            textAlign: TextAlign.center,
+            style: TextStyle(fontSize: 12, fontWeight: FontWeight.w300),
+          ),
+          actions: [
+            SizedBox(
+              // Wrap the button with SizedBox
+              width: double.infinity, // Set width to infinity
+              child: ElevatedButton(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+                style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.red, foregroundColor: Colors.white),
+                child: const Text('DISMISS'),
+              ),
+            ),
+          ],
+        ),
+      );
+    }
+
+    if (password != confirmPassword) {
+      return showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+          icon: const Icon(
+            Icons.warning,
+            color: Colors.red,
+            size: 80,
+          ),
+          title: const Text(
+            'Register Failed',
+            textAlign: TextAlign.center,
+            style: TextStyle(fontSize: 16),
+          ),
+          content: const Text(
+            "Password and confirm password doesn't match!",
+            textAlign: TextAlign.center,
+            style: TextStyle(fontSize: 12, fontWeight: FontWeight.w300),
+          ),
+          actions: [
+            SizedBox(
+              // Wrap the button with SizedBox
+              width: double.infinity, // Set width to infinity
+              child: ElevatedButton(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+                style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.red, foregroundColor: Colors.white),
+                child: const Text('DISMISS'),
+              ),
+            ),
+          ],
+        ),
+      );
+    }
 
     final response = await http.post(
       Uri.parse('https://backend-p3runt4vfa-et.a.run.app/users/register'),
@@ -51,7 +126,7 @@ class _RegisterState extends State<Register> {
             size: 80,
           ),
           title: const Text(
-            'Login Failed',
+            'Register Failed',
             textAlign: TextAlign.center,
             style: TextStyle(fontSize: 16),
           ),
@@ -69,9 +144,7 @@ class _RegisterState extends State<Register> {
                   Navigator.of(context).pop();
                 },
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.red,
-                  foregroundColor: Colors.white
-                ),
+                    backgroundColor: Colors.red, foregroundColor: Colors.white),
                 child: const Text('DISMISS'),
               ),
             ),
@@ -129,17 +202,20 @@ class _RegisterState extends State<Register> {
                       child: TextFormField(
                         controller: _usernameController,
                         decoration: InputDecoration(
-                            label: const Text("Username"),
-                            suffixIcon: const Icon(Icons.person_pin_rounded),
-                            enabledBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(12),
-                              borderSide: const BorderSide(
-                                  color: primaryGray, width: 1.0),
-                            ),
-                            focusedBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(12),
-                                borderSide: const BorderSide(
-                                    color: primaryBlue, width: 2.0))),
+                          label: const Text("Username"),
+                          suffixIcon: const Icon(Icons.person_pin_rounded),
+                          enabledBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(12),
+                            borderSide: const BorderSide(
+                                color: primaryGray, width: 1.0),
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(12),
+                            borderSide: const BorderSide(
+                                color: primaryBlue, width: 2.0),
+                          ),
+                          contentPadding: const EdgeInsets.only(bottom: 2, left: 12),
+                        ),
                       ),
                     ),
                   ),
@@ -153,17 +229,21 @@ class _RegisterState extends State<Register> {
                       child: TextFormField(
                         controller: _emailController,
                         decoration: InputDecoration(
-                            label: const Text("Email"),
-                            suffixIcon: const Icon(Icons.email),
-                            enabledBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(12),
-                              borderSide: const BorderSide(
-                                  color: primaryGray, width: 1.0),
-                            ),
-                            focusedBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(12),
-                                borderSide: const BorderSide(
-                                    color: primaryBlue, width: 2.0))),
+                          label: const Text("Email"),
+                          suffixIcon: const Icon(Icons.email),
+                          enabledBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(12),
+                            borderSide: const BorderSide(
+                                color: primaryGray, width: 1.0),
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(12),
+                            borderSide: const BorderSide(
+                                color: primaryBlue, width: 2.0),
+                          ),
+                          contentPadding:
+                              const EdgeInsets.only(bottom: 2, left: 12),
+                        ),
                       ),
                     ),
                   ),
@@ -177,17 +257,21 @@ class _RegisterState extends State<Register> {
                       child: TextFormField(
                         controller: _passwordController,
                         decoration: InputDecoration(
-                            label: const Text("Password"),
-                            suffixIcon: const Icon(Icons.lock),
-                            enabledBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(12),
-                              borderSide: const BorderSide(
-                                  color: primaryGray, width: 1.0),
-                            ),
-                            focusedBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(12),
-                                borderSide: const BorderSide(
-                                    color: primaryBlue, width: 2.0))),
+                          label: const Text("Password"),
+                          suffixIcon: const Icon(Icons.lock),
+                          enabledBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(12),
+                            borderSide: const BorderSide(
+                                color: primaryGray, width: 1.0),
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(12),
+                            borderSide: const BorderSide(
+                                color: primaryBlue, width: 2.0),
+                          ),
+                          contentPadding:
+                              const EdgeInsets.only(bottom: 2, left: 12),
+                        ),
                       ),
                     ),
                   ),
@@ -201,17 +285,21 @@ class _RegisterState extends State<Register> {
                       child: TextFormField(
                         controller: _confirmPasswordController,
                         decoration: InputDecoration(
-                            label: const Text("Confirm Password"),
-                            suffixIcon: const Icon(Icons.lock),
-                            enabledBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(12),
-                              borderSide: const BorderSide(
-                                  color: primaryGray, width: 1.0),
-                            ),
-                            focusedBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(12),
-                                borderSide: const BorderSide(
-                                    color: primaryBlue, width: 2.0))),
+                          label: const Text("Confirm Password"),
+                          suffixIcon: const Icon(Icons.lock),
+                          enabledBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(12),
+                            borderSide: const BorderSide(
+                                color: primaryGray, width: 1.0),
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(12),
+                            borderSide: const BorderSide(
+                                color: primaryBlue, width: 2.0),
+                          ),
+                          contentPadding:
+                              const EdgeInsets.only(bottom: 2, left: 12),
+                        ),
                       ),
                     ),
                   ),

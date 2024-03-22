@@ -135,8 +135,10 @@ class _LoginState extends State<Login> {
                             focusedBorder: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(12),
                               borderSide: const BorderSide(
-                                  color: primaryBlue, width: 3.0),
-                            )),
+                                  color: primaryBlue, width: 2.0),
+                            ),
+                            contentPadding: const EdgeInsets.only(bottom: 2, left: 12),
+                            ),
                       ),
                     ),
                     const SizedBox(
@@ -158,8 +160,9 @@ class _LoginState extends State<Login> {
                           focusedBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(12),
                             borderSide: const BorderSide(
-                                color: primaryBlue, width: 3.0),
+                                color: primaryBlue, width: 2.0),
                           ),
+                          contentPadding: const EdgeInsets.only(bottom: 2, left: 12),
                         ),
                       ),
                     ),
@@ -223,8 +226,6 @@ class _LoginState extends State<Login> {
                       username = user?.displayName ?? "Silahkan login manual";
                     }
                     await GetStorage().write('username', username);
-                    print("test");
-                    print(username);
                     Navigator.push(
                       context,
                       MaterialPageRoute(
@@ -247,7 +248,7 @@ class _LoginState extends State<Login> {
                   ),
                 ),
               ),
-              const SizedBox(height: 30),
+              const SizedBox(height: 8),
               Container(
                 padding: const EdgeInsets.only(right: 50),
                 child: Row(

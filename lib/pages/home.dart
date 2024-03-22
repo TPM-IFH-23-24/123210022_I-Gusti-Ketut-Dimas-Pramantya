@@ -2,6 +2,7 @@ import "package:flutter/material.dart";
 import "package:get_storage/get_storage.dart";
 import "package:travel_app/data/tourism_place.dart";
 import "package:travel_app/pages/login.dart";
+import "package:travel_app/services/google_sign_in.dart";
 import "package:url_launcher/url_launcher_string.dart";
 
 const oceanBlue = Color.fromARGB(255, 0, 103, 165);
@@ -93,8 +94,9 @@ class Home extends StatelessWidget {
               ListTile(
                 leading: const Icon(Icons.logout),
                 title: const Text('Logout'),
-                onTap: () {
-                  GetStorage().remove("username");
+                onTap: () async{
+                  await GetStorage().remove("username");
+                  await GoogleService.logout();
                   Navigator.push(
                     context,
                     MaterialPageRoute(

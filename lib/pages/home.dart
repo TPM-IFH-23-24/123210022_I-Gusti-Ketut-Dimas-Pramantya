@@ -134,7 +134,6 @@ class Home extends StatelessWidget {
   Widget _travelCardItem(BuildContext context, int index) {
     return Card(
       child: SizedBox(
-        height: 250,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
